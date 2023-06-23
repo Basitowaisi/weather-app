@@ -46,7 +46,9 @@ const CityPicker = () => {
 
   const onSelectCity = (city: CityOption) => {
     setCity(city)
-    router.push(`/location/${city?.value.latitude}/${city?.value.longitude}`)
+    router.push(
+      `/location/${city?.value.name}/${city?.value.latitude}/${city?.value.longitude}`
+    )
   }
 
   const selectedCountry = country?.value.isoCode as string
