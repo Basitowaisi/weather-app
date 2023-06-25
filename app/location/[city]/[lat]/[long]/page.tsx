@@ -5,6 +5,14 @@ import { CheckCircleIcon, ExclamationIcon } from "@heroicons/react/solid"
 import { Callout } from "@tremor/react"
 import StatCard from "@/components/StatCard"
 import InfoPanel from "@/components/InfoPanel"
+import TemperatureChart from "@/components/TemperatureChart"
+import RainChart from "@/components/RainChart"
+import HumidityChart from "@/components/HumidityChart"
+import CalloutCard from "@/components/CalloutCard"
+import cleanData from "@/utils/cleanData"
+import getBasePath from "@/utils/getBasePath"
+
+export const revalidate = 60
 
 type Props = {
   params: {
@@ -27,6 +35,25 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
   })
 
   const results: Root = data.myQuery
+  const payload = cleanData(results, city)
+
+  try {
+    const response = await fetch(
+      `${getBasePath()}/api/generate-weather-summary`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          weatherData: payload,
+        }),
+      }
+    ).then((res) => res.json())
+    console.log(response)
+  } catch (e) {
+    console.log(e.message)
+  }
 
   return (
     <div className="flex flex-col min-h-screen md:flex-row">
@@ -68,7 +95,7 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
                   color="rose"
                 />
                 {Number(results.daily.uv_index_max?.[0]?.toFixed(1)) > 5 && (
-                  <Callout
+                  <CalloutCard
                     title="The UV is high today, be sure to wear SPF!"
                     color={"red"}
                   />
@@ -90,7 +117,11 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
           </div>
         </div>
         <hr className="mb-5" />
-        <div className="space-y-3"></div>
+        <div className="space-y-3">
+          <TemperatureChart results={results} />
+          <RainChart results={results} />
+          <HumidityChart results={results} />
+        </div>
       </div>
     </div>
   )
