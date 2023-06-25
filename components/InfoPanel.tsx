@@ -16,7 +16,7 @@ function InfoPanel({ city, lat, long, results }: Props) {
     weatherCodeToString[results.current_weather.weathercode]
 
   return (
-    <div className="bg-gradient-to-br from-[#394f68] to-[#18387e] text-white p-10">
+    <div className="bg-primary text-white p-10">
       <div className="pb-5">
         <h1 className="text-6xl font-bold">{decodeURI(city)}</h1>
         <p className="text-xs text-gray-400 ">
