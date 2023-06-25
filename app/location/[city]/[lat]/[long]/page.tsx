@@ -37,18 +37,19 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
   const results: Root = data.myQuery
   const payload = cleanData(results, city)
 
-  const response = await fetch(
-    `${getBasePath()}/api/generate-weather-summary`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        weatherData: payload,
-      }),
-    }
-  ).then((res) => (res.ok ? res.json() : undefined))
+  // const response = await fetch(
+  //   `${getBasePath()}/api/generate-weather-summary`,
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       weatherData: payload,
+  //     }),
+  //   }
+  // ).then((res) => (res.ok ? res.json() : undefined))
+  const response = undefined
 
   return (
     <div className="flex flex-col min-h-screen md:flex-row">

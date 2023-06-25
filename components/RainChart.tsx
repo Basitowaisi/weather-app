@@ -13,7 +13,7 @@ const RainChart = ({ results }: Props) => {
     .map((time) =>
       new Date(time).toLocaleString("en-US", {
         hour: "numeric",
-        hour12: true,
+        hour12: false,
       })
     )
     .slice(0, FOR_HOURS)
