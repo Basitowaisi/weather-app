@@ -36,22 +36,20 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
 
   const results: Root = data.myQuery
   const payload = cleanData(results, city)
+  let response
 
   try {
-    const response = await fetch(
-      `${getBasePath()}/api/generate-weather-summary`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          weatherData: payload,
-        }),
-      }
-    ).then((res) => res.json())
+    response = await fetch(`${getBasePath()}/api/generate-weather-summary`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        weatherData: payload,
+      }),
+    }).then((res) => res.json())
     console.log(response)
-  } catch (e) {
+  } catch (e: any) {
     console.log(e.message)
   }
 
@@ -71,9 +69,12 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
           <div className="m-2 mb-10">
             <Callout
               className="mt-4"
-              title={"Test message"}
-              icon={false ? ExclamationIcon : CheckCircleIcon}
-              color={false ? "rose" : "red"}
+              title={
+                response ??
+                "No summary available as openai api calls are exhausted. Please try again later."
+              }
+              icon={response ? ExclamationIcon : CheckCircleIcon}
+              color={response ? "rose" : "red"}
             />
           </div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 m-2">
