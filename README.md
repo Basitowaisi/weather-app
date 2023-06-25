@@ -1,5 +1,7 @@
 Uses api `https://open-meteo.com/`
 
+The weather app can be accessed in [Here](https://weather-app-git-main-eboybasit-gmailcom.vercel.app/).
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
