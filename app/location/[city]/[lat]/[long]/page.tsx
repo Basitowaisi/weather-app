@@ -36,10 +36,10 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
 
   const results: Root = data.myQuery
   const payload = cleanData(results, city)
-  let response
 
-  try {
-    response = await fetch(`${getBasePath()}/api/generate-weather-summary`, {
+  const response = await fetch(
+    `${getBasePath()}/api/generate-weather-summary`,
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,11 +47,8 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
       body: JSON.stringify({
         weatherData: payload,
       }),
-    }).then((res) => res.json())
-    console.log(response)
-  } catch (e: any) {
-    console.log(e.message)
-  }
+    }
+  ).then((res) => (res.ok ? res.json() : undefined))
 
   return (
     <div className="flex flex-col min-h-screen md:flex-row">
